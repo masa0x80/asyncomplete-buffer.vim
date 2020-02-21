@@ -26,7 +26,7 @@ endfunction
 
 function! asyncomplete#sources#buffer#get_source_options(opts)
     return extend({
-        \ 'events': ['BufWinEnter'],
+        \ 'events': ['VimEnter', 'BufWinEnter'],
         \ 'on_event': function('s:on_event'),
         \}, a:opts)
 endfunction
@@ -51,9 +51,7 @@ let s:last_ctx = {}
 function! s:on_event(opt, ctx, event) abort
     if s:should_ignore(a:opt) | return | endif
 
-    if a:event == 'BufWinEnter'
-        call s:refresh_keywords()
-    endif
+    call s:refresh_keywords()
 endfunction
 
 function! s:refresh_keywords() abort
